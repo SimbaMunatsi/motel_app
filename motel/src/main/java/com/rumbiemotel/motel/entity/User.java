@@ -18,17 +18,11 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Email is required")
+
+    private String firstName;
+    private String lastName;
     @Column(unique = true)
     private String email;
-
-    @NotBlank(message = "Name is required")
-    private String firstName;
-
-    @NotBlank(message = "Name is required")
-    private String lastName;
-
-    @NotBlank(message = "Password is required")
     private String password;
 
     @Enumerated(EnumType.STRING)
