@@ -6,6 +6,7 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys; // For secret key generation
 import io.jsonwebtoken.security.SignatureException;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -50,10 +51,10 @@ public class JwtUtil {
         return extractExpiration(token).before(new Date());
     }
 
-    public Boolean validateToken(String token, String username) {
+    public Boolean validateToken(String token, UserDetails userDetails) {
         try {
             final String extractedUsername = extractUsername(token);
-            return (extractedUsername.equals(username) && !isTokenExpired(token));
+            return (extractedUsername.equals(userDetails.getUsername()) && !isTokenExpired(token));
         } catch (SignatureException e) {
             // Log this: Invalid JWT signature
             System.err.println("Invalid JWT signature: " + e.getMessage());
